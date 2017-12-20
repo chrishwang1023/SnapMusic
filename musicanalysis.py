@@ -8,7 +8,6 @@ import pyaudio
 song = 'sample.wav'
 
 (rate, data) = wavfile.read(song)
-# print(len(data))
 amp0 = data[:, 0]
 amp1 = data[:, 1]
 amp_per_sec = 0
@@ -26,18 +25,12 @@ for i in range(len(amp0)):
         amp_per_sec = (amp_per_sec / (i % 1000)) ** (1/2)
         amplitude += [amp_per_sec]
 
-# print(max(amplitude))
-# print(min(amplitude))
-
 #get duration of wave file, length of song 
 fname = 'sample.wav'
 with contextlib.closing(wave.open(fname,'r')) as f:
     frames = f.getnframes()
     rate = f.getframerate()
     duration = frames / float(rate)
-    # print(duration)
-# print(len(amplitude))
-
 
 # play the song
 CHUNK = 1024  
@@ -75,53 +68,4 @@ def play(song):
     stream.close()  
     #close
     p.terminate()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# print(function(amplitude))
-
-# pl.plot(amplitude)
-# pl.ylabel("Amplitude(dB)")
-# pl.show()
-
-
-# pl.plot(t, data[:,0])
-# pl.xlabel("Frequency(Hz)")
-
-
-# freq = 20*np.log10(np.abs(np.fft.rfft(data[:, 0])))
-
-# f = np.linspace(0, rate/2.0, len(p))
-# print(amp)
-
-# frequency = []
-
-# print(frequency)
-
-
-
-
-# t = np.arange(len(data))*1.0/(rate)
-# pl.plot(t, data[:,0])
-# pl.show()
-
-
-
-# pl.plot(amp)
-# pl.xlabel("Frequency(Hz)")
-# pl.ylabel("Amplitude(dB)")
-# pl.show()
-
-
 
