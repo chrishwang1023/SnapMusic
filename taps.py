@@ -36,17 +36,11 @@ class tapping():
         if self.j == 1:
             self.playthread.start()
         self.label.config(text=str(self.j))
-        # print (self.j)
-        # t = (time.strftime("%M:%S"))
         t = time.time()
         attributes.Times.append(t)
-        # print(Times)
-        # if self.j > 1:
-        #     print (float(self.t[self.j-1])-float(self.t[self.j-2]),'seconds')
         return
 
 def BPM():
-    # global Start_Interval, avg, Fin_Times, Final_Times_Array, last_count
     if __name__ == "__main__":
         tapping()
         size = len(attributes.Times)
@@ -76,7 +70,6 @@ def BPM():
                 for i in range(size-2):
                     attributes.Final_Times_Array.append(attributes.Final_Times_Array[i] + attributes.Fin_Times[size//5 * (i//5 + 1)])
         print(attributes.Fin_Times)
-        # print(Final_Times_Array)
 
 BPM()
 print(attributes.Final_Times_Array)
