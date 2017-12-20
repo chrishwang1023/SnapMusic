@@ -18,12 +18,11 @@ from musicanalysis import play
 from tkinter import * 
 import random
 import math
-# import taps
+
 
 
 cascPath = "haarcascade_frontalface_default.xml"  # for face detection
 faceCascade = cv2.CascadeClassifier(cascPath)
-# log.basicConfig(filename='webcam.log',level=log.INFO)
 
 video_capture = cv2.VideoCapture(0)
 
@@ -65,6 +64,7 @@ with contextlib.closing(wave.open(fname,'r')) as f:
 
 ANALYSISRATE = 88
 
+#raw data from taps.py
 Final_Times_Array = [0.8732759475708008, 1.9280156294504804, 2.88275531133016, 3.88749499320984]
 
 ind = 0
@@ -92,11 +92,6 @@ while success:
         minSize=(40,40)
     )
 
-    # if cv2.waitKey(1) & 0xFF == ord('r'):
-        # tappingThread = Thread(target = BPM, daemon = True)
-        # tappingThread.start()
-
-
     if cv2.waitKey(1) & 0xFF == ord('p'):
         ind = 0
         playthread = Thread(target = play, args = [song], daemon = True)
@@ -106,14 +101,6 @@ while success:
 
     color_range = (max(amplitude) - min(amplitude)) // 255
 
-    # hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
-    # # define range of blue color in HSV
-    # lower_blue = np.array([110,50,50])
-    # upper_blue = np.array([130,255,255])
-    # # Threshold the HSV image to get only blue colors
-    # mask = cv2.inRange(hsv, lower_blue, upper_blue)
-    # # Bitwise-AND mask and original image
-    # res = cv2.bitwise_and(frame,frame, mask= mask)
     img_color = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
     for (x, y, w, h) in faces:
@@ -128,69 +115,9 @@ while success:
             cv2.circle(frame, (x + w//2 + int(1.5*(amplitude[index] // 100)), y + h//2 - int(1.5*(amplitude[index] // 100))), int(amplitude[index] // 100), (100, amplitude[index] / color_range, 100), 2 + int(amplitude[index] // 500))
             cv2.circle(frame, (x + w//2 - int(1.5*(amplitude[index] // 100)), y + h//2 + int(1.5*(amplitude[index] // 100))), int(amplitude[index] // 100), (amplitude[index] / color_range, 100, 100), 2 + int(amplitude[index] // 500))
             cv2.circle(frame, (x + w//2 - int(1.5*(amplitude[index] // 100)), y + h//2 - int(1.5*(amplitude[index] // 100))), int(amplitude[index] // 100), (amplitude[index] / color_range, amplitude[index] / color_range, amplitude[index] / color_range), 2 + int(amplitude[index] // 500))
-
-
-            # cv2.imwrite("frame%d.png" % count, frame)
-            # cutout = cv2.imread("frame%d.png" % count)
-
             rectX = (x + w//2 - int((4/6)*w))
             rectY = (y + h//2 - int((4/6)*w))
 
-
-            # circles = cv2.HoughCircles(cutout,cv2.HOUGH_GRADIENT,1,20,
-            #     param1=50, param2=30, minRadius=0, maxRadius=int((4/6)*w))
-            
-            # cutout[y:(y+2*int((4/6)*w)), x:(x+2*int((4/6)*w))] = [0,0,0]
-            # cutout[0:y,0:320] = [0, 0, 0]
-            # cutout[y:(y+w),0:x] = [0, 0, 0]
-            # cutout[y:(y+w), (x+w):320] = [0, 0, 0]
-            # cutout[(y+w):240, 0:320] = [0, 0, 0]
-
-            # cv2.imwrite("frame%d.png" % count, cutout)
-
-            # cutout2 = "frame%d.png" % count
-            # src = cv2.imread(cutout2, 1)
-            # tmp = cv2.cvtColor(src, cv2.COLOR_BGR2GRAY)
-            # _,alpha = cv2.threshold(tmp,0,255,cv2.THRESH_BINARY)
-            # b, g, r = cv2.split(src)
-            # rgba = [b,g,r, alpha]
-            # dst = cv2.merge(rgba,4)
-            # cv2.imwrite("frame%d.png" % count, dst)
-
-            # count += 1
-
-            # imageWidth = 320
-            # imageHeight = 240
-
-            # xPos, yPos = 0, 0
-
-            # while xPos < imageWidth:
-            #     while yPos < imageHeight:
-            #         if (math.sqrt((xPos - x)**2 + (yPos - y)**2)) > int((4/6)*w):
-            #             cutout.itemset((yPos, xPos, 0), 255)
-            #             cutout.itemset((yPos, xPos, 1), 255)
-            #             cutout.itemset((yPos, xPos, 2), 255)
-            #         yPos = yPos + 1
-            #     yPos = 0
-            #     xPos = xPos + 1
-
-            
-
-
-
-
-            # for i in range(320):
-            #     for j in range(240):
-            #         if frame[i:j] == (0, 0, 0):
-            #             frame[i:j] = (255q, 128, 128)
-
-            # frame[np.where((frame == [0,0,0]).all(axis = 2))] = [0,255,255]
-            
-            # cv2.imshow('img_color', img_color)
-
-
-            # print(taps.attributes.Final_Times_Array)
-            # for ind in range(len(Final_Times_Array)):
             print(ind)
             if ind == len(Final_Times_Array):
                 ind = 0
@@ -204,9 +131,6 @@ while success:
         
     # Display the resulting frame
     cv2.imshow('Video', frame)
-    # cv2.imshow('mask', mask)
-    # cv2.imshow('res', res)
-
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
