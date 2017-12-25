@@ -108,7 +108,6 @@ while success:
             cv2.circle(frame, (x+w//2, y+h//2), int((4/6)*w), (150, 50, 50), 5)
         else:
             index = round(musicanalysis.playtime * 88)
-            # print(musicanalysis.playtime)
             current_amp = amplitude[index] - min(amplitude)
 
             cv2.circle(frame, (x + w//2 + int(1.5*(amplitude[index] // 100)), y + h//2 + int(1.5*(amplitude[index] // 100))), int(amplitude[index] // 100), (100, 100, amplitude[index] / color_range), 2 + int(amplitude[index] // 500))
@@ -137,12 +136,3 @@ while success:
     
 video_capture.release()
 cv2.destroyAllWindows()
-
-
-
-
-
-
-
-
-
